@@ -1,4 +1,4 @@
-class GantChart extends EventTarget {
+class GanttChart extends EventTarget {
 	constructor(){
 		super()
 		setTimeout(() => {
@@ -18,7 +18,6 @@ class GantChart extends EventTarget {
             // Set an end-point
             ctx2.lineTo(0, 100);
 
-            // Stroke it (Do the Drawing)
             ctx2.stroke();
 
             ctx2.fillStyle = 'orange';
@@ -47,7 +46,6 @@ class GantChart extends EventTarget {
                     <canvas class="fixed" id="chart-2" width="400" height="300" style="width: 400px; height: 300px;"></canvas>
                     <br/>
                     <br/>
-
                     </div>
                     <br/>
                     <br/>
@@ -73,4 +71,4 @@ class GantChart extends EventTarget {
 	} 
 }
 
-module.exports = GantChart
+module.exports = GanttChart

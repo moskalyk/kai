@@ -1,4 +1,4 @@
-const GantChart = require('./GantChart.jsx')
+const GanttChart = require('./GanttChart.jsx')
 
 class Index extends EventTarget {
 	constructor(){
@@ -12,7 +12,7 @@ class Index extends EventTarget {
 	async view() {
 		return <>
 			<div>
-                <GantChart key={1}/>
+                <GanttChart key={1}/>
 			</div>
 		</>
 	} 

@@ -1,8 +1,8 @@
-let gantchart0;
+let ganttchart0;
 
 function runner() {
 	eval(`
-	 class GantChart extends EventTarget {
+	 class GanttChart extends EventTarget {
 	constructor(){
 		super()
 		setTimeout(() => {
@@ -22,7 +22,6 @@ function runner() {
             // Set an end-point
             ctx2.lineTo(0, 100);
 
-            // Stroke it (Do the Drawing)
             ctx2.stroke();
 
             ctx2.fillStyle = 'orange';
@@ -51,7 +50,6 @@ function runner() {
                     <canvas class="fixed" id="chart-2" width="400" height="300" style="width: 400px; height: 300px;"></canvas>
                     <br/>
                     <br/>
-
                     </div>
                     <br/>
                     <br/>
@@ -92,7 +90,7 @@ class Index extends EventTarget {
 	async view (onload, registration) {
 		return \`
 			<div>
-                <GantChart key={1}/>
+                <GanttChart key={1}/>
 			</div>
 		\`
 	} 
@@ -111,7 +109,7 @@ class Index extends EventTarget {
 				return new Promise((res, rej) => {
 					let update = (datum) => {
 					    // TODO: dispatch per component
-					    gantchart0.dispatchEvent(new Event('dynamics'));
+					    ganttchart0.dispatchEvent(new Event('dynamics'));
 						res(datum.msg.value)	
 									
 						onload && vf.webSocket.send('update', JSON.stringify({status: 170, msg: {key: key, value: value}}))
@@ -126,8 +124,8 @@ class Index extends EventTarget {
 					return new Promise((res) => {
 						const loadDatabase = (datum) => {
 							setTimeout(() => {
-								gantchart0.registration = true;
-								gantchart0.dispatchEvent(new Event('dynamics'));
+								ganttchart0.registration = true;
+								ganttchart0.dispatchEvent(new Event('dynamics'));
 							}, 10)
 							if('v' in datum.msg){
 								res(datum.msg.v[key])
@@ -138,8 +136,8 @@ class Index extends EventTarget {
 						}
 						
 						const onloadUpdate = (datum) => { 
-				 			gantchart0.registration = true;
-							gantchart0.dispatchEvent(new Event('dynamics'));
+				 			ganttchart0.registration = true;
+							ganttchart0.dispatchEvent(new Event('dynamics'));
 						}
 						
 						vf.aPath(onloadUpdate)
@@ -170,18 +168,18 @@ class Index extends EventTarget {
 	
 	(async () => {
 		let index = new Index();
-		let gantchart0 = await (new GantChart());
+		let ganttchart0 = await (new GanttChart());
 
 		const contents = await index.view();
 		const element = document.getElementById('anchor');
 		let main = contents;
-		main = main.replaceAll("<GantChart key={1}/>", await gantchart0.view((await gantchart0.publicMembers())[0]))
+		main = main.replaceAll("<GanttChart key={1}/>", await ganttchart0.view((await ganttchart0.publicMembers())[0]))
 		element.setHTMLUnsafe(main);
 		
-        gantchart0.addEventListener('dynamics', async (e) => {
-		    const secondContents = await gantchart0.view(false, gantchart0.registration)
+        ganttchart0.addEventListener('dynamics', async (e) => {
+		    const secondContents = await ganttchart0.view(false, ganttchart0.registration)
 
-		    const main = document.getElementById('anchor').replaceAll('<GantChart key={1}/>', secondContents)
+		    const main = document.getElementById('anchor').replaceAll('<GanttChart key={1}/>', secondContents)
 		    element.setHTMLUnsafe(main)
 	    });
             
@@ -190,7 +188,7 @@ class Index extends EventTarget {
             main = await index.view(false, index.registration)
             index.dispatchEvent(new Event('^dynamics'))
 
-            main = main.replaceAll("<GantChart key={1}/>", await gantchart0.view((await gantchart0.publicMembers())[0]));
+            main = main.replaceAll("<GanttChart key={1}/>", await ganttchart0.view((await ganttchart0.publicMembers())[0]));
 
             element.setHTMLUnsafe(main)
         });   
