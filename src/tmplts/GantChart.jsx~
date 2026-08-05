@@ -1,0 +1,20 @@
+
+class GantChart extends EventTarget {
+	constructor(){
+		super()
+	}
+	
+    publicMembers() {
+        return []
+    }	
+    
+	async view() {
+		return <>
+			<div>
+                <GantChart/>
+			</div>
+		</>
+	} 
+}
+
+module.exports = GantChart

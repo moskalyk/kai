@@ -1,0 +1,17 @@
+.row {
+    display: flex;  
+}
+.fixed{
+    width: 200px;
+}
+tr:nth-child(even) {
+  background-color: #E6E6E6;
+}
+
+table {
+    width: 800px;
+}
+
+td {
+    padding: 18px;
+}
