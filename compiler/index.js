@@ -34,6 +34,9 @@ console.log(componentFile)
                 } else {
 		         functionString = `(async (self) => {console.log(self)${matches[i]}})()"`
                 }
+                console.log(stringArray)
+                console.log(stringArrayEnd)
+                console.log(matchesFunction)
 		        componentFile = componentFile.replace(componentFile.slice(stringArray+9, stringArrayEnd+matchesFunction.length-2), functionString)
 	        }
 	    })
@@ -68,8 +71,8 @@ const setupDynamicsDecorators = (componentFile) => {
 
 (async () => {
 
-    // directory path
-    const file = './src/tmplts/Index.jsx'
+    // directory path, TODO: needs to be recursive
+    const file = './src/tmplts/index.jsx'
 
     let indexContents = await getFileContents(file)
     const anchorContents = await getFileContents('./anchor.js')
@@ -82,6 +85,7 @@ const setupDynamicsDecorators = (componentFile) => {
     let composedComponents = {}
     
     while ((packagesMatched = matchPackages.exec(indexContents)) !== null) {
+        console.log(packagesMatched)
         composedComponents[packagesMatched.groups.component] = {
             rawPackage: packagesMatched.groups.package,
             c: [],
@@ -98,6 +102,7 @@ const setupDynamicsDecorators = (componentFile) => {
     let tempWrittenFile = writtenFile
 
     for(let k in composedComponents){
+        console.log('k', k)
         let requiredLoading = await getFileContents('./src/tmplts/' + composedComponents[k].rawPackage.replace('./', ''))
 
         requiredLoading = "#" + " " + requiredLoading
@@ -105,6 +110,8 @@ const setupDynamicsDecorators = (componentFile) => {
         
         const reactiveLoadedFile = await setupDynamicsDecorators(dynamicsLoading)
         writtenFile = writtenFile.replace('#', reactiveLoadedFile.toString()).replace('module.exports = ' + k, '').replace('<>','\\`').replace('</>','\\`')
+        console.log('component')
+        console.log(`const ${k} = require('${composedComponents[k].rawPackage}')`)
         writtenFile = writtenFile.replace(`const ${k} = require('${composedComponents[k].rawPackage}')`,'' )
         
         let composed = []
@@ -275,8 +282,8 @@ const setupDynamicsDecorators = (componentFile) => {
             clickHandlers.push(`
         ${c.toLowerCase()+j}.addEventListener('dynamics', async (e) => {
 		    const secondContents = await ${c.toLowerCase()+j}.view(false, ${c.toLowerCase()+j}.registration)
-
-		    const main = document.getElementById('anchor').replaceAll('${k}', secondContents)
+            index.dispatchEvent(new Event('dynamics'))
+		    // const main = document.getElementById('anchor').replaceAll('${k}', secondContents)
 		    element.setHTMLUnsafe(main)
 	    });
             `)
