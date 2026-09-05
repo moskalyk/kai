@@ -1,7 +1,15 @@
 class GanttChart extends EventTarget {
 	constructor(){
 		super()
-		setTimeout(() => {
+		
+	}
+	
+    publicMembers() {
+        return []
+    }	
+    
+	async view() {
+	    setTimeout(() => {
 		    var c=document.getElementById("chart-2");
             var ctx2=c.getContext("2d");
             const shift = 150
@@ -26,14 +34,8 @@ class GanttChart extends EventTarget {
             ctx2.fillStyle = '#9c9';
 
             ctx2.fillRect(20+shift,20,150,100);
+
 		}, 0)
-	}
-	
-    publicMembers() {
-        return []
-    }	
-    
-	async view() {
 		return <>
 			<div>
                 <p>timeline</p>
