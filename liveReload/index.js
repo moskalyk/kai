@@ -11,7 +11,7 @@ const startServer = async () => {
     const RED = "\x1b[31m"
     const CYAN = "\x1b[36m"
     
-    const npx = spawn('npx', ['serve', '.', '-l', '3030'])
+        const npx = spawn('npx', ['serve', '.', '--no-port-switching', '-p','3030'])
     
     let isAcceptingConnections = false;
     let matchConnections = /(.+) Accepting connections at (.+)/   
